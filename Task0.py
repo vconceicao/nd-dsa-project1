@@ -20,3 +20,25 @@ Print messages:
 "Last record of calls, <incoming number> calls <answering number> at time <time>, lasting <during> seconds"
 """
 
+def get_first_record(list):
+    return list[0];
+
+def get_last_record(list):
+    return list[len(list)-1];
+
+text_first_record =  get_first_record(texts);
+
+text_incoming_number = text_first_record[0];
+text_answering_number = text_first_record[1];
+text_time = text_first_record[2];
+
+call_last_record = get_last_record(calls);
+
+call_incoming_number = call_last_record[0];
+call_answering_number = call_last_record[1];
+call_time = call_last_record[2];
+call_seconds = call_last_record[3];
+
+
+print("First record of texts, "+ text_incoming_number +" texts "+text_answering_number+" at time "+text_time);
+print("Last record of calls, "+call_incoming_number+" calls "+call_answering_number+" at time "+call_time+", lasting "+call_seconds+" seconds");

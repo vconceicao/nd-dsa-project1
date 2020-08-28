@@ -1,0 +1,26 @@
+Time Complexity
+
+"""
+TASK 0:
+What is the first record of texts and what is the last record of calls?
+Print messages:
+"First record of texts, <incoming number> texts <answering number> at time <time>"
+"Last record of calls, <incoming number> calls <answering number> at time <time>, lasting <during> seconds"
+"""
+	
+	Line 24 Constant Time O(1)
+	
+	Line 27 Constant Time O(1)
+	
+	Line 29 Constant Time O(1)
+
+	Line 31 - 33  Constant Time O(1) + O(1) + O(1) = O(1)
+	
+	Line 35  Constant Time O(1)
+
+	Line 37 - 40   Constant Time O(1) +  O(1)  + O(1) + O(1) = O(1) 	
+	
+	Line 43 -44  Constant Time O(1) + O(1) = 0(1) 
+
+Total =   O(1) +  O(1)  + O(1) + O(1) + O(1) +  O(1)  + O(1) 
+	  = O(1) 	
