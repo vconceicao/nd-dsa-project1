@@ -24,3 +24,28 @@ Print messages:
 
 Total =   O(1) +  O(1)  + O(1) + O(1) + O(1) +  O(1)  + O(1) 
 	  = O(1) 	
+
+
+"""
+TASK 1:
+How many different telephone numbers are there in the records? 
+Print a message:
+"There are <count> different telephone numbers in the records."
+"""
+
+def get_different_phone_numbers(list):     
+    diff_list = set()              //O(1)
+    first_column = 0			   //O(1)	
+    second_column = 1			   //O(1)
+    i = 0						   //O(1)
+    while len(list)>i:									
+        diff_list.add(list[i][first_column]) 
+        diff_list.add(list[i][second_column])			
+        i+=1								
+    return diff_list						//O(3n + 5)
+
+diff_list = get_different_phone_numbers(texts) // O(1)
+diff_phone_numbers_count = len(diff_list)  //O(1)
+print("There are "+ str(diff_phone_numbers_count) +" different telephone numbers in the records") //O(1)
+
+Total O(3n + 8) = O(n)
