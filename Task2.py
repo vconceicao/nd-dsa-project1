@@ -20,3 +20,25 @@ Print a message:
 September 2016.".
 """
 
+def check_max_value(phone_dict):
+    max_duration=0
+    phone_number = ''
+
+    for key in phone_dict:
+        if max_duration < phone_dict[key]:
+            max_duration = phone_dict[key]
+            phone_number = key
+    return key, max_duration
+
+phone_dict = {}
+for key in calls:
+    phone_dict[key[0]] = 0
+
+for key in calls:
+    phone_dict[key[0]] = phone_dict[key[0]] + int(key[3])
+
+phone_number, max_duration = check_max_value(phone_dict)
+
+
+
+print(phone_number+" spent the longest time, " +str(max_duration) +" seconds, on the phone during September 2016.")
