@@ -43,3 +43,61 @@ Print the answer as a part of a message::
 to other fixed lines in Bangalore."
 The percentage should have 2 decimal digits
 """
+
+def get_number_of_calls_of_bangalore(calls):
+  number_of_calls_from_bangalore = 0
+  number_of_calls_inside_bangalore_area = 0
+  
+  for record in calls:
+    if record[0].startswith("(080)"): 
+      number_of_calls_from_bangalore+=1
+    if record[0].startswith("(080)") and record[1].startswith("(080)"):
+      number_of_calls_inside_bangalore_area+=1
+  return number_of_calls_from_bangalore, number_of_calls_inside_bangalore_area   
+
+
+def calculate_calls_percentage(count1, count2):
+  percentage = (count2/count1)*100
+  return percentage
+
+def get_code(phone_number):
+  index_s_bracket = phone_number.index("(")+1
+  index_e_bracket = phone_number.index(")")
+
+  return phone_number[index_s_bracket: index_e_bracket]
+
+def get_mobile_prefix(phone_number):
+  return phone_number[0:4]
+
+def get_list_of_codes_called_by_bangalore(calls):
+  phone_dict={}
+  for key in calls:
+    if key[0].startswith("(080)"):
+      if key[1].startswith("(0"):
+        phone_dict[get_code(key[1])]=0
+      if key[1].startswith("7") or key[1].startswith("8") or key[1].startswith("9"):
+        phone_dict[get_mobile_prefix(key[1])]=0
+  return phone_dict
+
+
+def part_a(calls):
+  list_of_codes = get_list_of_codes_called_by_bangalore(calls)
+  print("The numbers called by people in Bangalore have codes:")
+  for code in sorted(list_of_codes):
+    print(code)
+
+def part_b(calls):
+  number_of_calls_from_bangalore, number_of_calls_inside_bangalore_area =  get_number_of_calls_of_bangalore(calls)
+
+  percentage = calculate_calls_percentage(number_of_calls_from_bangalore, number_of_calls_inside_bangalore_area)
+
+  print("{:.2f} percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.".format(percentage))
+
+
+def show_data_about_bangalore(calls):
+
+  part_a(calls)  
+  
+  part_b(calls)
+ 
+show_data_about_bangalore(calls)

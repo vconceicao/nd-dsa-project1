@@ -39,6 +39,7 @@ call_answering_number = call_last_record[1];
 call_time = call_last_record[2];
 call_seconds = call_last_record[3];
 
-
-print("First record of texts, "+ text_incoming_number +" texts "+text_answering_number+" at time "+text_time);
-print("Last record of calls, "+call_incoming_number+" calls "+call_answering_number+" at time "+call_time+", lasting "+call_seconds+" seconds");
+print("First record of texts, {incoming_number} texts {answering_number} at time {time}"
+      .format(incoming_number=text_incoming_number, answering_number=text_answering_number, time=text_time))
+print("Last record of calls, {incoming_number} calls {answering_number} at time {time}, lasting {during} seconds"
+      .format(incoming_number=call_incoming_number, answering_number=call_answering_number, time=call_time, during=call_seconds))

@@ -3,6 +3,10 @@ Read file into texts and calls.
 It's ok if you don't understand how to read files
 """
 import csv
+from collections import defaultdict
+from typing import Dict
+
+
 with open('texts.csv', 'r') as f:
     reader = csv.reader(f)
     texts = list(reader)
@@ -30,15 +34,15 @@ def check_max_value(phone_dict):
             phone_number = key
     return key, max_duration
 
-phone_dict = {}
-for key in calls:
-    phone_dict[key[0]] = 0
+phone_dict: Dict[str, int]
+phone_dict = defaultdict(int)
 
 for key in calls:
-    phone_dict[key[0]] = phone_dict[key[0]] + int(key[3])
+    phone_dict[key[0]] += int(key[3])
+    phone_dict[key[1]] += int(key[3])
 
 phone_number, max_duration = check_max_value(phone_dict)
 
 
-
-print(phone_number+" spent the longest time, " +str(max_duration) +" seconds, on the phone during September 2016.")
+print ("{telephone_number} spent the longest time, {total_time} seconds, on the phone during September 2016."
+       .format(telephone_number=phone_number,total_time=max_duration))

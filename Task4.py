@@ -25,3 +25,22 @@ Print a message:
 The list of numbers should be print out one per line in lexicographic order with no duplicates.
 """
 
+def remove_false_telemarketers(possible_telemarketers, non_telemarketers):
+    return possible_telemarketers.difference(non_telemarketers)
+
+possible_telemarketers =set()
+non_telemarketers = set()
+
+for phone in calls:
+    possible_telemarketers.add(phone[0])
+    non_telemarketers.add(phone[1])
+
+for phone in texts:
+    non_telemarketers.add(phone[0])
+    non_telemarketers.add(phone[1])
+
+validated_telemarketers = remove_false_telemarketers(possible_telemarketers, non_telemarketers)
+
+print("These numbers could be telemarketers: ")
+for phone in sorted(validated_telemarketers):
+    print(phone)
