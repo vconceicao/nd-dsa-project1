@@ -32,7 +32,7 @@ def check_max_value(phone_dict):
         if max_duration < phone_dict[key]:
             max_duration = phone_dict[key]
             phone_number = key
-    return key, max_duration
+    return phone_number, max_duration
 
 phone_dict: Dict[str, int]
 phone_dict = defaultdict(int)
