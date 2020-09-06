@@ -1,0 +1,258 @@
+Time Complexity
+
+"""
+TASK 0:
+What is the first record of texts and what is the last record of calls?
+Print messages:
+"First record of texts, <incoming number> texts <answering number> at time <time>"
+"Last record of calls, <incoming number> calls <answering number> at time <time>, lasting <during> seconds"
+"""
+
+def get_first_record(list):
+    return list[0];
+
+def get_last_record(list):
+    return list[len(list)-1];
+
+text_first_record =  get_first_record(texts);
+
+text_incoming_number = text_first_record[0];
+text_answering_number = text_first_record[1];
+text_time = text_first_record[2];
+
+call_last_record = get_last_record(calls);
+
+call_incoming_number = call_last_record[0];
+call_answering_number = call_last_record[1];
+call_time = call_last_record[2];
+call_seconds = call_last_record[3];
+
+
+print("First record of texts, {incoming_number} texts {answering_number} at time {time}"
+      .format(incoming_number=text_incoming_number, answering_number=text_answering_number, time=text_time))
+print("Last record of calls, {incoming_number} calls {answering_number} at time {time}, lasting {during} seconds"
+      .format(incoming_number=call_incoming_number, answering_number=call_answering_number, time=call_time, during=call_seconds))
+###########Total - TASK 0###########################	
+Total = O(11) = O(1)
+##################################################	
+
+"""
+TASK 1:
+How many different telephone numbers are there in the records? 
+Print a message:
+"There are <count> different telephone numbers in the records."
+"""
+
+def get_different_phone_numbers(list):
+    diff_list = set()
+    first_column = 0
+    second_column = 1
+    for phone in list:
+        diff_list.add(phone[first_column])
+        diff_list.add(phone[second_column])
+    return diff_list
+
+merged_list = texts + calls
+diff_list = get_different_phone_numbers(merged_list)
+diff_phone_numbers_count = len(diff_list)
+print("There are {count} different telephone numbers in the records.".format(count=diff_phone_numbers_count))
+
+
+###########Total - TASK 1###########################	
+Total O(2n + 8) = O(n)
+####################################################
+
+"""
+TASK 2: Which telephone number spent the longest time on the phone
+during the period? Don't forget that time spent answering a call is
+also time spent on the phone.
+Print a message:
+"<telephone number> spent the longest time, <total time> seconds, on the phone during 
+September 2016.".
+"""
+
+def check_max_value(phone_dict):
+    max_duration=0
+    phone_number = ''
+
+    for key in phone_dict:
+        if max_duration < phone_dict[key]:
+            max_duration = phone_dict[key]
+            phone_number = key
+    return key, max_duration
+
+phone_dict: Dict[str, int]
+phone_dict = defaultdict(int)
+
+for key in calls:
+    phone_dict[key[0]] += int(key[3])
+    phone_dict[key[1]] += int(key[3])
+
+phone_number, max_duration = check_max_value(phone_dict)
+
+print ("{telephone_number} spent the longest time, {total_time} seconds, on the phone during September 2016."
+       .format(telephone_number=phone_number,total_time=max_duration))
+
+###########Total - TASK 2###########################	
+Total O(2n + 8) = O(n)
+####################################################
+
+"""
+TASK 3:
+(080) is the area code for fixed line telephones in Bangalore.
+Fixed line numbers include parentheses, so Bangalore numbers
+have the form (080)xxxxxxx.)
+
+Part A: Find all of the area codes and mobile prefixes called by people
+in Bangalore.
+ - Fixed lines start with an area code enclosed in brackets. The area
+   codes vary in length but always begin with 0.
+ - Mobile numbers have no parentheses, but have a space in the middle
+   of the number to help readability. The prefix of a mobile number
+   is its first four digits, and they always start with 7, 8 or 9.
+ - Telemarketers' numbers have no parentheses or space, but they start
+   with the area code 140.
+
+Print the answer as part of a message:
+"The numbers called by people in Bangalore have codes:"
+ <list of codes>
+The list of codes should be print out one per line in lexicographic order with no duplicates.
+
+Part B: What percentage of calls from fixed lines in Bangalore are made
+to fixed lines also in Bangalore? In other words, of all the calls made
+from a number starting with "(080)", what percentage of these calls
+were made to a number also starting with "(080)"?
+
+Print the answer as a part of a message::
+"<percentage> percent of calls from fixed lines in Bangalore are calls
+to other fixed lines in Bangalore."
+The percentage should have 2 decimal digits
+"""
+
+
+def get_code(phone_number):
+  index_s_bracket = phone_number.index("(")+1
+  index_e_bracket = phone_number.index(")")
+
+  return phone_number[index_s_bracket: index_e_bracket]
+###########Total - get_code(phone_number)###########################	
+Total = O(3) = O(1)
+####################################################################
+
+
+def get_mobile_prefix(phone_number):
+  return phone_number[0:4]
+###########Total get_mobile_prefix(phone_number)###########################	
+Total = O(1)
+###########################################################################
+
+def get_list_of_codes_called_by_bangalore(calls):
+  phone_dict={}
+  for key in calls:
+    if key[0].startswith("(080)"):
+      if key[1].startswith("(0"):
+        phone_dict[get_code(key[1])]=0
+      if key[1].startswith("7") or key[1].startswith("8") or key[1].startswith("9"):
+        phone_dict[get_mobile_prefix(key[1])]=0
+  return phone_dict
+###########Total - get_list_of_codes_called_by_bangalore(calls)###########################	
+Total = O(8n + 2) = O(n)
+##########################################################################################
+
+def part_a(calls):
+  list_of_codes = get_list_of_codes_called_by_bangalore(calls)
+  print("The numbers called by people in Bangalore have codes:")
+  for code in sorted(list_of_codes):
+    print(code)
+###########Total - part_a(calls)###########################	
+Total = O(n log n + 2) = O(n log n)
+##########################################################
+
+
+def get_number_of_calls_of_bangalore(calls):
+  number_of_calls_from_bangalore = 0
+  number_of_calls_inside_bangalore_area = 0
+  
+  for record in calls:
+    if record[0].startswith("(080)"): 
+      number_of_calls_from_bangalore+=1
+    if record[0].startswith("(080)") and record[1].startswith("(080)"):
+      number_of_calls_inside_bangalore_area+=1
+  return number_of_calls_from_bangalore, number_of_calls_inside_bangalore_area   
+
+###########Total - get_number_of_calls_of_bangalore(calls)###########################	
+Total = O(5n + 3) = O(n)
+#####################################################################################
+
+
+def calculate_calls_percentage(count1, count2):
+  percentage = (count2/count1)*100
+  return percentage
+###########Total - calculate_calls_percentage(count1, count2)###########################	
+Total = O(2) = O(1)
+#########################################################################################
+
+
+def part_b(calls):
+  number_of_calls_from_bangalore, number_of_calls_inside_bangalore_area =  get_number_of_calls_of_bangalore(calls)
+
+  percentage = calculate_calls_percentage(number_of_calls_from_bangalore, number_of_calls_inside_bangalore_area)
+
+  print("{:.2f} percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.".format(percentage))
+
+###########Total - part_b(calls)###########################	
+Total O(5n+ 5) = O(n)
+####################################################
+
+
+def show_data_about_bangalore(calls):
+
+  part_a(calls)  
+  
+  part_b(calls)
+ 
+
+show_data_about_bangalore(calls)
+
+###########Total - TASK 3###########################	
+Part a =  O(n log n)
+Part b =  O(n)
+Total =  O(n log n)
+####################################################
+
+
+"""
+TASK 4:
+The telephone company want to identify numbers that might be doing
+telephone marketing. Create a set of possible telemarketers:
+these are numbers that make outgoing calls but never send texts,
+receive texts or receive incoming calls.
+
+Print a message:
+"These numbers could be telemarketers: "
+<list of numbers>
+The list of numbers should be print out one per line in lexicographic order with no duplicates.
+"""
+
+def remove_false_telemarketers(possible_telemarketers, non_telemarketers):
+    return possible_telemarketers.difference(non_telemarketers) # constant_time O(len(s)+len(t)) = O(1)
+
+possible_telemarketers =set()
+non_telemarketers = set()
+
+for phone in calls:
+    possible_telemarketers.add(phone[0])
+    non_telemarketers.add(phone[1])
+
+for phone in texts:
+    non_telemarketers.add(phone[0])
+    non_telemarketers.add(phone[1])
+
+validated_telemarketers = remove_false_telemarketers(possible_telemarketers, non_telemarketers)
+
+print("These numbers could be telemarketers: ")
+for phone in sorted(validated_telemarketers):
+    print(phone)
+###########Total - TASK 4###########################	
+O(n log n + 3) = O(n log n)
+####################################################
